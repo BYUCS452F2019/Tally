@@ -8,7 +8,7 @@ Instructor (InstructorID, Grade, Age, FirstName, LastName, VideoLinks, Email, Ph
 Student (StudentID, FirstName, LastName, InstructorID, SchoolID) 
     Key SchoolID references School
 Subject (SubjectID, Name, Description) 
-Assignment (AssignmentID, WorksheetName, Score, ImageLink, StudentID, InstructorID SubjectID)
+Assignment (AssignmentID, WorksheetName, Score, ImageLink, StudentID, InstructorID, SubjectID)
     Foreign Key StudentID references Student
     Foreign Key InstructorID references Instructor
     Foreign Key SubjectID references Subject
