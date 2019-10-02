@@ -4,9 +4,9 @@
 
 School (SchoolID, Name, Address)
 Instructor (InstructorID, Grade, Age, FirstName, LastName, VideoLinks, Email, PhoneNumber, Password, SchoolID)
-  	Foreign Key SchoolID references School
+    Foreign Key SchoolID references School
 Student (StudentID, FirstName, LastName, InstructorID, SchoolID) 
-  	 Key SchoolID references School
+    Key SchoolID references School
 Subject (SubjectID, Name, Description) 
 Assignment (AssignmentID, WorksheetName, Score, ImageLink, StudentID, InstructorID SubjectID)
     Foreign Key StudentID references Student
