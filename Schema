@@ -1,3 +1,7 @@
+// My proposed changes (Nathan)
+// Also, Brandon had a good idea of making a Users table, and a roles table, then you wouldn't have as much redundancy 
+// with things like names etc...
+
 School (SchoolID, Name, Address)
 Instructor (InstructorID, Grade, Age, FirstName, LastName, VideoLinks, Email, PhoneNumber, Password, SchoolID)
   	Foreign Key SchoolID references School
