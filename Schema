@@ -1,16 +1,18 @@
-// My proposed changes (Nathan)
-// Also, Brandon had a good idea of making a Users table, and a roles table, then you wouldn't have as much redundancy 
-// with things like names etc...
+// My proposed changes (Morgan)
+// I also took the SchoolID out of the Student table, because it's already referencing Class which has a SchoolID
 
+User (UserID, FirstName, LastName, Email, PhoneNumber, Password)
 School (SchoolID, Name, Address)
-Instructor (InstructorID, Grade, Age, FirstName, LastName, VideoLinks, Email, PhoneNumber, Password, SchoolID)
+Class (ClassID, Grade, SchoolID, InstructorID)
     Foreign Key SchoolID references School
-Student (StudentID, FirstName, LastName, InstructorID, SchoolID) 
-    Key SchoolID references School
+    Foreign Key InstructorID references User
+Student (StudentID, UserID, ClassID)
+    Foreign Key UserID references User
+    Foreign Key ClassID references Class
 Subject (SubjectID, Name, Description) 
-Assignment (AssignmentID, WorksheetName, Score, ImageLink, StudentID, InstructorID, SubjectID)
+Assignment (AssignmentID, WorksheetName, Score, ImageLink, StudentID, ClassID, SubjectID)
     Foreign Key StudentID references Student
-    Foreign Key InstructorID references Instructor
+    Foreign Key ClassID references Class
     Foreign Key SubjectID references Subject
 
 
