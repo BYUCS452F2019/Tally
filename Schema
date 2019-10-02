@@ -1,18 +1,62 @@
-// My proposed changes (Morgan)
-// I also took the SchoolID out of the Student table, because it's already referencing Class which has a SchoolID
+// My proposed changes (Brandon) 
+// I also took the SchoolID out of the Student table, because it's already referencing Class which has a SchoolID - Morgan
+// I think we should make both an assignemnt table and an assignment response table - Brandon
 
 User (UserID, FirstName, LastName, Email, PhoneNumber, Password)
+Anyone who logs into the application will have a user created in the db.
+- UserID is the primary key
+- FirstName of user
+- LastName of user
+- Email of user
+- PhoneNumber of user
+- Password to login to application
+
 School (SchoolID, Name, Address)
+Different schools that teachers and classes can belong to.
+- SchoolID is the primary key
+- Name is the name of the school
+- Address of the school
+
 Class (ClassID, Grade, SchoolID, InstructorID)
     Foreign Key SchoolID references School
     Foreign Key InstructorID references User
+There are many classes in a school and this will provide a relationship between schools instructors and students 
+- ClassID is the primary key
+- Grade is the school grade for the children in the class
+- SchoolID that the class is associated with
+- InstructorID the id of the the instructor for the class
+
 Student (StudentID, UserID, ClassID)
     Foreign Key UserID references User
     Foreign Key ClassID references Class
+This indicates if the user is a student and attaches them to a class.
+- StudentID is the Primary key    
+- UserID is the user information of the student
+- ClassID indicates which class the student is in.
+    
 Subject (SubjectID, Name, Description) 
-Assignment (AssignmentID, WorksheetName, Score, ImageLink, StudentID, ClassID, SubjectID)
-    Foreign Key StudentID references Student
+There are different subject types and different assignments can be categorized as a spesific subject
+- SubjectID is the Primary key   
+- Name of the Subject
+- Description of Subject
+    
+// This is what I would think they would look like. - Brandon 
+Assignment (AssignmentID, WorksheetName, ClassID, SubjectID, ImageLink)
     Foreign Key ClassID references Class
     Foreign Key SubjectID references Subject
+A Class has many assignments and each one is related to a spesific subject.
+- AssignmentID is the Primary key
+- WorksheetName is the name of the assignment
+- ClassID is the associated class
+- SubjectID is the associated subject
+- ImageLink is a link to a picture of the paper assignment
 
-
+AssignmentResponse (AssignmentResponseID AssignmentID, Score, ImageLink, StudentID)
+    Foreign Key AssignmentID references Assignment
+    Foreign Key StudentID references Student
+Each student has completes an assignment and submits a response.
+- AssignmentResponseID is the Primary Key
+- AssignmentID is the associated Assignment
+- Score is the grade given by the instructor for this spesific response
+- ImageLink of the students paper response
+- StudentID is the student who submitted this response
