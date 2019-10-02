@@ -1,13 +1,12 @@
 School (SchoolID, Name, Address)
-Teacher (TeacherID, Grade, Age, FirstName, LastName, VideoLinks, SchoolID, CurriculumID)
-  Foreign Key SchoolID references School
-  Foreign Key CurriculumID references Curriculum
-Student (StudentID, FirstName, LastName, TeacherID, SchoolID, CurriculumID) 
-  Foreign Key TeacherID references Teacher
-  Foreign Key SchoolID references School
-  Foreign Key CurriculumID references Curriculum
-Curriculum (CurriculumID, Grade) 
-Worksheet (WorksheetID, ImageLink, WorksheetName, Score, SubjectID)
-  Foreign Key SubjectID references Subject
-Subject (SubjectID, CurriculumID)
-  Foreign Key CurriculumID references Curriculum
+Instructor (InstructorID, Grade, Age, FirstName, LastName, VideoLinks, Email, PhoneNumber, Password, SchoolID)
+  	Foreign Key SchoolID references School
+Student (StudentID, FirstName, LastName, InstructorID, SchoolID) 
+  	 Key SchoolID references School
+Subject (SubjectID, Name, Description) 
+Assignment (AssignmentID, WorksheetName, Score, ImageLink, StudentID, InstructorID SubjectID)
+  	Foreign Key StudentID references Student
+    Foreign Key InstructorID references Instructor
+    Foreign Key SubjectID references Subject
+
+
