@@ -15,14 +15,19 @@ const useStyles = makeStyles(theme => ({
 
 const UserList = () => {
   const classes = useStyles();
-
-  const [users] = useState(mockData);
+  
+  const [users, setUsers] = useState({users:mockData, initial: mockData});
+  const callback = (value) =>{
+    var updatedList = users.initial;
+    updatedList = updatedList.filter((user)=> user.name.toLowerCase().includes(value.toLowerCase()));
+    setUsers({users:updatedList, initial: users.initial});
+  };
 
   return (
     <div className={classes.root}>
-      <UsersToolbar />
+      <UsersToolbar parentCallback={callback} />
       <div className={classes.content}>
-        <UsersTable users={users} />
+        <UsersTable users={users.users} />
       </div>
     </div>
   );
