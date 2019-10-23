@@ -42,13 +42,6 @@ const Topbar = props => {
         <div className={classes.flexGrow} />
         <Hidden mdDown>
           <IconButton color="inherit">
-            <Badge
-              badgeContent={notifications.length}
-              color="primary"
-              variant="dot"
-            >
-              <NotificationsIcon />
-            </Badge>
           </IconButton>
           <IconButton
             className={classes.signOutButton}
