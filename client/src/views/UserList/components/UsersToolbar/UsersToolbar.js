@@ -28,8 +28,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const UsersToolbar = props => {
-  const { className, ...rest } = props;
+const UsersToolbar =  props => {
+  const {parentCallback, className, ...rest } = props;
 
   const classes = useStyles();
 
@@ -40,19 +40,20 @@ const UsersToolbar = props => {
     >
       <div className={classes.row}>
         <span className={classes.spacer} />
-        <Button className={classes.importButton}>Import</Button>
-        <Button className={classes.exportButton}>Export</Button>
         <Button
           color="primary"
           variant="contained"
         >
-          Add user
+          Add student
         </Button>
       </div>
       <div className={classes.row}>
         <SearchInput
           className={classes.searchInput}
-          placeholder="Search user"
+          placeholder="Search student"
+          onChange={(event)=>{   
+              parentCallback(event.target.value);
+          }}
         />
       </div>
     </div>
