@@ -34,7 +34,7 @@ const Dashboard = () => {
 
   const getClass = async (event) => {
     let classID = document.getElementById('classid').value;
-    const response = await fetch('https://tally2.azurewebsites.net/api/Classes/' + classID,{mode: 'cors'});
+    const response = await fetch('https://tally2.azurewebsites.net/api/Classes/' + classID,{method: 'GET'});
     console.log(response)
     const myJson = await response.json();
     console.log(JSON.stringify(myJson));
@@ -70,7 +70,7 @@ const Dashboard = () => {
   };
 
   const practice = async () => {
-    const response = await fetch('https://tally2.azurewebsites.net/api/users', {mode: 'cors'});
+    const response = await fetch('https://tally2.azurewebsites.net/api/users', {method: 'GET'});
     console.log(response)
     const myJson = await response.json();
     console.log(JSON.stringify(myJson));

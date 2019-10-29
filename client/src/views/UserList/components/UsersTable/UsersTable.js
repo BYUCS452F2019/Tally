@@ -99,7 +99,7 @@ const UsersTable = props => {
 
   const getUser = async (event, id) => {
     userID = document.getElementById('userid').value;
-    const response = await fetch('https://tally2.azurewebsites.net/api/Users/' + userID,{mode: 'cors'});
+    const response = await fetch('https://tally2.azurewebsites.net/api/Users/' + userID,{method: 'GET'});
     const myJson = await response.json();
     console.log(JSON.stringify(myJson));
   };
