@@ -22,7 +22,7 @@ const Admin = () => {
 
   let classesObject = [];
   const getAllClasses = async (event) => {
-    const response = await fetch('https://tally2.azurewebsites.net/api/Classes', {mode: 'cors'});
+    const response = await fetch('https://tally2.azurewebsites.net/api/Classes', {method: 'GET'});
     console.log(response)
     classesObject = await response.json();
     console.log(JSON.stringify(classesObject));
@@ -32,7 +32,7 @@ const Admin = () => {
   let classObject = [];
   const getClass = async (event) => {
     let classID = document.getElementById('classid').value;
-    const response = await fetch('https://tally2.azurewebsites.net/api/Classes/' + classID,{mode: 'cors'});
+    const response = await fetch('https://tally2.azurewebsites.net/api/Classes/' + classID,{mehtod: 'GET'});
     console.log(response)
     classObject = await response.json();
     console.log(JSON.stringify(classObject));
@@ -77,7 +77,7 @@ const addStudent = async (event) => {
         headers: {
           'Content-Type': 'application/json'
         }
-      }, {mode: 'no-cors'});
+      });
       const json = await response.json();
       console.log('Success:', JSON.stringify(json));
     } catch (error) {
@@ -113,7 +113,7 @@ const addUser = async (event) => {
         headers: {
           'Content-Type': 'application/json'
         }
-      }, {mode: 'cors'});
+      });
       const json = await response.json();
       console.log('Success:', JSON.stringify(json));
     } catch (error) {
@@ -142,7 +142,7 @@ const getAllAssignments = async (event) => {
         headers: {
           'Content-Type': 'application/json'
         }
-      }, {mode: 'no-cors'});
+      }, {});
       const json = await response.json();
       console.log('Success:', JSON.stringify(json));
     } catch (error) {
@@ -152,7 +152,7 @@ const getAllAssignments = async (event) => {
 
   let usersObject = [];
   const getAllUsers = async () => {
-    const response = await fetch('https://tally2.azurewebsites.net/api/users', {mode: 'cors'});
+    const response = await fetch('https://tally2.azurewebsites.net/api/users', {method: 'GET'});
     console.log(response)
     usersObject = await response.json();
     console.log(JSON.stringify(usersObject));

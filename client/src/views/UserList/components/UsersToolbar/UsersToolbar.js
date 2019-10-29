@@ -43,7 +43,7 @@ const UsersToolbar =  props => {
 
     const getStudent = async (event) => {
         let studentID = document.getElementById('studentid').value;
-        const response = await fetch('https://tally2.azurewebsites.net/api/Students/' + studentID,{mode: 'cors'});
+        const response = await fetch('https://tally2.azurewebsites.net/api/Students/' + studentID,{method: 'GET'});
         const myJson = await response.json();
         console.log(JSON.stringify(myJson));
     }
