@@ -1,0 +1,174 @@
+
+service: nosql-data
+
+app: tally
+org: bennirobotics
+
+custom:
+  settings:
+    STUDENT_DATA_TABLE: students
+    TEACHER_DATA_TABLE: teachers 
+    CLASS_DATA_TABLE: classes
+    ASSIGNMENT_DATA_TABLE: assignments 
+    USER_DATA_TABLE: users 
+
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  environment: ${self:custom.settings}
+  stage: dev
+  region: us-east-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource:
+        - arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.settings.STUDENT_DATA_TABLE}
+        # - { "Fn::GetAtt": ["studentTable", "Arn" ] }
+        # - { "Fn::GetAtt": ["classTable", "Arn" ] }
+        # - { "Fn::GetAtt": ["teacherTable", "Arn" ] }
+        # - { "Fn::GetAtt": ["userTable", "Arn" ] }
+        # - { "Fn::GetAtt": ["studentTable", "Arn" ] }
+
+
+
+
+functions:
+  getStudentData:
+    handler: handler.getStudentData
+    events:
+      - http:
+          method: get
+          path: /student-data/{studentID}
+          cors: true
+  postStudentData:
+    handler: handler.postStudentData
+    events:
+      - http:
+          method: post
+          path: /student-data
+          cors: true
+  updateStudentData:
+    handler: handler.updateStudentData
+    events:
+      - http:
+          method: put
+          path: /student-data/{studentID}
+          cors: true
+  deleteStudentData:
+    handler: handler.deleteStudentData
+    events:
+      - http:
+          method: delete
+          path: /student-data/{studentID}
+          cors: true
+  getTeacherData:
+    handler: handler.getTeacherData
+    events:
+      - http:
+          method: any
+          path: /teacher-data
+          cors: true
+  getClassData:
+    handler: handler.getClassData
+    events:
+      - http:
+          method: any
+          path: /class-data
+          cors: true
+  getAssignmentData:
+    handler: handler.getAssignmentData
+    events:
+      - http:
+          method: any
+          path: /assignment-data
+          cors: true
+  getUserData:
+    handler: handler.getUserData
+    events:
+      - http:
+          method: any
+          path: /user-data
+          cors: true
+
+resources: 
+      Resources:
+        studentTable: 
+          Type: AWS::DynamoDB::Table
+          Properties:
+            AttributeDefinitions:
+              - AttributeName: studentID
+                AttributeType: S
+            KeySchema:
+              - AttributeName: studentID
+                KeyType: HASH
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
+            TableName: ${self:custom.settings.STUDENT_DATA_TABLE}
+
+        teacherTable: 
+          Type: AWS::DynamoDB::Table
+          Properties:
+            AttributeDefinitions:
+              - AttributeName: teacherID
+                AttributeType: S
+            KeySchema:
+              - AttributeName: teacherID
+                KeyType: HASH
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
+            TableName: ${self:custom.settings.TEACHER_DATA_TABLE}
+
+
+        userTable: 
+          Type: AWS::DynamoDB::Table
+          Properties:
+            AttributeDefinitions:
+              - AttributeName: userID
+                AttributeType: S
+            KeySchema:
+              - AttributeName: userID
+                KeyType: HASH
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
+            TableName: ${self:custom.settings.USER_DATA_TABLE}
+
+
+        assignmentTable: 
+          Type: AWS::DynamoDB::Table
+          Properties:
+            AttributeDefinitions:
+              - AttributeName: assignmentID
+                AttributeType: S
+            KeySchema:
+              - AttributeName: assignmentID
+                KeyType: HASH
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
+            TableName: ${self:custom.settings.ASSIGNMENT_DATA_TABLE}
+
+        
+        classTable: 
+          Type: AWS::DynamoDB::Table
+          Properties:
+            AttributeDefinitions:
+              - AttributeName: classID
+                AttributeType: S
+            KeySchema:
+              - AttributeName: classID
+                KeyType: HASH
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
+            TableName: ${self:custom.settings.CLASS_DATA_TABLE}
+

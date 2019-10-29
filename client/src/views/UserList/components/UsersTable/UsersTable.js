@@ -4,6 +4,14 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { makeStyles } from '@material-ui/styles';
+import { Button } from '@material-ui/core';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import uuid from "uuid";
 import {
   Card,
   CardActions,
@@ -43,45 +51,57 @@ const useStyles = makeStyles(theme => ({
 
 const UsersTable = props => {
   const { className, users, ...rest } = props;
-
+  let userInfo;
+  let userID;
+  const baseurl = 'https://tally2.azurewebsites.net/api/';
+  const [open, setOpen] = React.useState(false);
   const classes = useStyles();
-
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(0);
 
-  const handleSelectAll = event => {
-    const { users } = props;
+  const addUser = async (event) => {
+    //fetch the endpoint and send the student
+    console.log('sent this User: ', userInfo)
 
-    let selectedUsers;
+    let userID = uuid();
+    let firstName = document.getElementById('firstname').value;
+    let lastName = document.getElementById('lastname').value;
+    let email = document.getElementById('email').value;
+    let phoneNumber = document.getElementById('phonenumber').value;
+    let password = document.getElementById('password').value;
+    let schoolID = document.getElementById('schoolid').value;
+    let classID = document.getElementById('classid').value;
 
-    if (event.target.checked) {
-      selectedUsers = users.map(user => user.id);
-    } else {
-      selectedUsers = [];
+    try {
+      const response = await fetch(baseurl + 'Users', {
+        method: 'POST', // or 'PUT'
+        body: JSON.stringify({
+          userID: userID,
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          phoneNumber: phoneNumber,
+          password: password,
+          schoolID: schoolID,
+          classID: classID,
+        }), // data can be `string` or {object}!
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const json = await response.json();
+      console.log('Success:', JSON.stringify(json));
+    } catch (error) {
+      console.error('Error:', error);
     }
+  }
 
-    setSelectedUsers(selectedUsers);
-  };
-
-  const handleSelectOne = (event, id) => {
-    const selectedIndex = selectedUsers.indexOf(id);
-    let newSelectedUsers = [];
-
-    if (selectedIndex === -1) {
-      newSelectedUsers = newSelectedUsers.concat(selectedUsers, id);
-    } else if (selectedIndex === 0) {
-      newSelectedUsers = newSelectedUsers.concat(selectedUsers.slice(1));
-    } else if (selectedIndex === selectedUsers.length - 1) {
-      newSelectedUsers = newSelectedUsers.concat(selectedUsers.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelectedUsers = newSelectedUsers.concat(
-        selectedUsers.slice(0, selectedIndex),
-        selectedUsers.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelectedUsers(newSelectedUsers);
+  const getUser = async (event, id) => {
+    userID = document.getElementById('userid').value;
+    const response = await fetch('https://tally2.azurewebsites.net/api/Users/' + userID,{mode: 'cors'});
+    const myJson = await response.json();
+    console.log(JSON.stringify(myJson));
   };
 
   const handlePageChange = (event, page) => {
@@ -92,33 +112,62 @@ const UsersTable = props => {
     setRowsPerPage(event.target.value);
   };
 
+  const handleClickOpenUser = () => {
+    setOpen(true);
+  };
+
+  const handleCloseUser = () => {
+    setOpen(false);
+  };
+
   return (
-    <Card
-      {...rest}
-      className={clsx(classes.root, className)}
-    >
+    <Card {...rest} className={clsx(classes.root, className)}>
+        {
+        /* *************************************
+        // Dialog Pop Up
+        ************************************* */
+        }
+        <Button color="primary" variant="contained" onClick={handleClickOpenUser}> 
+            Add User 
+        </Button>
+        <Dialog open={open} onClose={handleCloseUser} aria-labelledby="form-dialog-title">
+        <DialogTitle id="form-dialog-title">Add User</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Fill in the information below to add a user
+          </DialogContentText>
+          <TextField autoFocus margin="dense" id="firstname" label="First name" type="First Name" fullWidth />
+          <TextField autoFocus margin="dense" id="lastname" label="Last Name" type="Last Name" fullWidth/>
+          <TextField autoFocus margin="dense" id="email" label="Email" type="email" fullWidth/>
+          <TextField autoFocus margin="dense" id="phonenumber" label="Phone Number" type="phone" fullWidth/>
+          <TextField autoFocus margin="dense" id="password" label="Password" type="password" fullWidth />
+          <TextField autoFocus margin="dense" id="schoolid" label="SchoolID" type="schoolID" fullWidth/>
+          <TextField autoFocus margin="dense" id="classid" label="ClassID" type="classID" fullWidth/>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseUser} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={event => addUser()} color="primary">
+            Add
+          </Button>
+        </DialogActions>
+      </Dialog>
+      {
+      /* *************************************
+      // Page Content
+      ************************************* */
+      }
       <CardContent className={classes.content}>
         <PerfectScrollbar>
           <div className={classes.inner}>
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={selectedUsers.length === users.length}
-                      color="primary"
-                      indeterminate={
-                        selectedUsers.length > 0 &&
-                        selectedUsers.length < users.length
-                      }
-                      onChange={handleSelectAll}
-                    />
-                  </TableCell>
+
                   <TableCell>Name</TableCell>
-                  <TableCell>Email</TableCell>
-                  <TableCell>Location</TableCell>
-                  <TableCell>Phone</TableCell>
-                  <TableCell>Registration date</TableCell>
+                  <TableCell>Grade</TableCell>
+                  <TableCell>Level</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -128,35 +177,11 @@ const UsersTable = props => {
                     hover
                     key={user.id}
                     selected={selectedUsers.indexOf(user.id) !== -1}
-                  >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={selectedUsers.indexOf(user.id) !== -1}
-                        color="primary"
-                        onChange={event => handleSelectOne(event, user.id)}
-                        value="true"
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <div className={classes.nameContainer}>
-                        <Avatar
-                          className={classes.avatar}
-                          src={user.avatarUrl}
-                        >
-                          {getInitials(user.name)}
-                        </Avatar>
-                        <Typography variant="body1">{user.name}</Typography>
-                      </div>
-                    </TableCell>
-                    <TableCell>{user.email}</TableCell>
-                    <TableCell>
-                      {user.address.city}, {user.address.state},{' '}
-                      {user.address.country}
-                    </TableCell>
-                    <TableCell>{user.phone}</TableCell>
-                    <TableCell>
-                      {moment(user.createdAt).format('DD/MM/YYYY')}
-                    </TableCell>
+                    onClick={event => getUser(event, user.id)}
+                    >
+                    <TableCell>{user.name}</TableCell>
+                    <TableCell>{user.grade}</TableCell>
+                    <TableCell>{user.level}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

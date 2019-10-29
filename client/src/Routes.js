@@ -6,13 +6,14 @@ import { Main as MainLayout, Minimal as MinimalLayout } from './layouts';
 
 import {
   Dashboard as DashboardView,
-  ProductList as ProductListView,
+  // ProductList as ProductListView,
   UserList as UserListView,
   Account as AccountView,
   Settings as SettingsView,
   SignUp as SignUpView,
   SignIn as SignInView,
-  NotFound as NotFoundView
+  NotFound as NotFoundView,
+  Admin as AdminView
 } from './views';
 
 const Routes = () => {
@@ -21,7 +22,7 @@ const Routes = () => {
       <Redirect
         exact
         from="/"
-        to="/users"
+        to="/studentlist"
       />
       <RouteWithLayout
         component={DashboardView}
@@ -33,14 +34,20 @@ const Routes = () => {
         component={UserListView}
         exact
         layout={MainLayout}
-        path="/users"
+        path="/studentlist"
       />
       <RouteWithLayout
+        component={AdminView}
+        exact
+        layout={MainLayout}
+        path="/admin"
+      />
+      {/* <RouteWithLayout
         component={ProductListView}
         exact
         layout={MainLayout}
         path="/products"
-      />
+      /> */}
       <RouteWithLayout
         component={AccountView}
         exact
