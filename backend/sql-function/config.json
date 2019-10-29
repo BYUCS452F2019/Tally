@@ -1,0 +1,6 @@
+{
+    "dbhost" : "database-1.ctvm4ypwdypg.us-east-1.rds.amazonaws.com",
+    "dbname" : "database-1",
+    "dbuser" :"admin",
+    "dbpassword" :"Tally4all&me"
+}

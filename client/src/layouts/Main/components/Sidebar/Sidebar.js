@@ -3,7 +3,9 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Divider, Drawer } from '@material-ui/core';
+import DashboardIcon from '@material-ui/icons/Dashboard';
 import PeopleIcon from '@material-ui/icons/People';
+import PeopleIconOutlined from '@material-ui/icons/PeopleAltOutlined';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import SettingsIcon from '@material-ui/icons/Settings';
@@ -40,36 +42,41 @@ const Sidebar = props => {
   const classes = useStyles();
 
   const pages = [
-    // {
-    //   title: 'Dashboard',
-    //   href: '/dashboard',
-    //   icon: <DashboardIcon />
-    // },
     {
-      title: 'Users',
-      href: '/users',
+      title: 'Admin',
+      href: '/admin',
+      icon: <PeopleIconOutlined />
+    },
+    {
+      title: 'Dashboard',
+      href: '/dashboard',
+      icon: <DashboardIcon />
+    },
+    {
+      title: 'Student List',
+      href: '/studentlist',
       icon: <PeopleIcon />
     },
-    {
-      title: 'Products',
-      href: '/products',
-      icon: <ShoppingBasketIcon />
-    },
+    // {
+    //   title: 'Products',
+    //   href: '/products',
+    //   icon: <ShoppingBasketIcon />
+    // },
     {
       title: 'Authentication',
       href: '/sign-in',
       icon: <LockOpenIcon />
     },
-    {
-      title: 'Account',
-      href: '/account',
-      icon: <AccountBoxIcon />
-    },
-    {
-      title: 'Settings',
-      href: '/settings',
-      icon: <SettingsIcon />
-    }
+    // {
+    //   title: 'Account',
+    //   href: '/account',
+    //   icon: <AccountBoxIcon />
+    // },
+    // {
+    //   title: 'Settings',
+    //   href: '/settings',
+    //   icon: <SettingsIcon />
+    // }
   ];
 
   return (
