@@ -31,7 +31,8 @@ const Admin = () => {
 
   let classObject = [];
   const getClass = async (event) => {
-    let classID = document.getElementById('classid').value;
+    let classID = document.getElementById('getclassid').value;
+    console.log(classID);
     const response = await fetch('https://tally2.azurewebsites.net/api/Classes/' + classID,{mehtod: 'GET'});
     console.log(response)
     classObject = await response.json();
@@ -40,7 +41,7 @@ const Admin = () => {
   }
 
   const getSchool = async (event) => {
-    let schoolID = document.getElementById('schoolid').value;
+    let schoolID = document.getElementById('getschoolid').value;
     const response = await fetch('https://tally2.azurewebsites.net/api/Schools/' + schoolID,{mehtod: 'GET'});
     console.log(response)
     classObject = await response.json();
@@ -48,148 +49,171 @@ const Admin = () => {
     document.getElementById('schooldiv').innerHTML = JSON.stringify(classObject);
 
   }
+
   const addSchool = async (event) => {
+    const name = document.getElementById('schoolname').value;
+    const address = document.getElementById('schooladdress').value;
+    let body = {
+        schoolID: 0,
+        name: name,
+        address: address,
+    }
+    try {
+      const response = await fetch(baseurl + 'Schools', {
+        method: 'POST', // or 'PUT'
+        body: JSON.stringify(body),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const json = await response.json();
+      console.log('Success:', JSON.stringify(json));
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
+  const getAssignment = async (event) => {
+    let assignmentid = document.getElementById('getassignmentid').value;
+    const response = await fetch('https://tally2.azurewebsites.net/api/Assignments/' + assignmentid,{mehtod: 'GET'});
+    console.log(response)
+    classObject = await response.json();
+    console.log(JSON.stringify(classObject));
+    document.getElementById('assignmentdiv').innerHTML = JSON.stringify(classObject);
 
   }
 
-const getAssignment = async (event) => {
-  let assignmentid = document.getElementById('assignmentid').value;
-  const response = await fetch('https://tally2.azurewebsites.net/api/Assignments/' + assignmentid,{mehtod: 'GET'});
-  console.log(response)
-  classObject = await response.json();
-  console.log(JSON.stringify(classObject));
-  document.getElementById('schooldiv').innerHTML = JSON.stringify(classObject);
+  const addAssignment = async (event) => {
 
-}
-const addAssignment = async (event) => {
+  }
 
-}
-const getAssingmentResponse = async (event) => {
-  let assignmentid = document.getElementById('assignmentid').value;
-  const response = await fetch('https://tally2.azurewebsites.net/api/AssignmentResponses/' + assignmentid,{mehtod: 'GET'});
-  console.log(response)
-  classObject = await response.json();
-  console.log(JSON.stringify(classObject));
-  document.getElementById('assignmentresponsediv').innerHTML = JSON.stringify(classObject);
-}
-const addAssignmentResponse = async (event) => {
+  const getAssingmentResponse = async (event) => {
+    let assignmentid = document.getElementById('getassignmentresponseid').value;
+    const response = await fetch('https://tally2.azurewebsites.net/api/AssignmentResponses/' + assignmentid,{mehtod: 'GET'});
+    console.log(response)
+    classObject = await response.json();
+    console.log(JSON.stringify(classObject));
+    document.getElementById('assignmentresponsediv').innerHTML = JSON.stringify(classObject);
+  }
 
-}
-const getAllSchools = async (event) => {
-  const response = await fetch('https://tally2.azurewebsites.net/api/Schools/',{mehtod: 'GET'});
-  console.log(response)
-  classObject = await response.json();
-  console.log(JSON.stringify(classObject));
-  document.getElementById('schoolsdiv').innerHTML = JSON.stringify(classObject);
-}
+  const addAssignmentResponse = async (event) => {
 
-const addStudent = async (event) => {
-    const classId = parseInt(document.getElementById('studentclassid').value);
-    const studentuserid = parseInt(document.getElementById('studentuserid').value);
-    let body = {
-        studentID: 0,
-        classId: classId,
-        userID: studentuserid,
-    }
-    try {
-      const response = await fetch(baseurl + 'Students', {
-        method: 'POST', // or 'PUT'
-        body: JSON.stringify(body),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      const json = await response.json();
-      console.log('Success:', JSON.stringify(json));
-    } catch (error) {
-      console.error('Error:', error);
-    }
-}
+  }
 
-const getAllAssignmentResponses = async (event) => {
-  const response = await fetch('https://tally2.azurewebsites.net/api/AssignmentResponses/',{mehtod: 'GET'});
-  console.log(response)
-  classObject = await response.json();
-  console.log(JSON.stringify(classObject));
-  document.getElementById('assignmentresponsesdiv').innerHTML = JSON.stringify(classObject);
-}
+  const getAllSchools = async (event) => {
+    const response = await fetch('https://tally2.azurewebsites.net/api/Schools/',{mehtod: 'GET'});
+    console.log(response)
+    classObject = await response.json();
+    console.log(JSON.stringify(classObject));
+    document.getElementById('schoolsdiv').innerHTML = JSON.stringify(classObject);
+  }
 
-const addUser = async (event) => {
+  const addStudent = async (event) => {
+      const classId = parseInt(document.getElementById('studentclassid').value);
+      const studentuserid = parseInt(document.getElementById('studentuserid').value);
+      let body = {
+          studentID: 0,
+          classId: classId,
+          userID: studentuserid,
+      }
+      try {
+        const response = await fetch(baseurl + 'Students', {
+          method: 'POST', // or 'PUT'
+          body: JSON.stringify(body),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        const json = await response.json();
+        console.log('Success:', JSON.stringify(json));
+      } catch (error) {
+        console.error('Error:', error);
+      }
+  }
 
-    const firstName = document.getElementById('firstname').value;
-    const lastName = document.getElementById('lastname').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const schoolID = document.getElementById('schoolid').value;
-    const classID = document.getElementById('classid').value;
-    const instructorID = document.getElementById('instructorid').value;
-    let body = {
-        firstName: firstName,
-        lastname: lastName,
-        email: email,
-        password: password,
-        classID: classID,
-        instructorID: instructorID,
-        schoolID: schoolID,
-    }
-    try {
-      const response = await fetch(baseurl + 'Users', {
-        method: 'POST', // or 'PUT'
-        body: JSON.stringify(body),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      const json = await response.json();
-      console.log('Success:', JSON.stringify(json));
-    } catch (error) {
-      console.error('Error:', error);
-    }
+  const getAllAssignmentResponses = async (event) => {
+    const response = await fetch('https://tally2.azurewebsites.net/api/AssignmentResponses/',{mehtod: 'GET'});
+    console.log(response)
+    classObject = await response.json();
+    console.log(JSON.stringify(classObject));
+    document.getElementById('assignmentresponsesdiv').innerHTML = JSON.stringify(classObject);
+  }
 
-}
+  const addUser = async (event) => {
 
-const getAllAssignments = async (event) => {
-  let classID = document.getElementById('schoolid').value;
-  const response = await fetch('https://tally2.azurewebsites.net/api/Assignments/',{mehtod: 'GET'});
-  console.log(response)
-  classObject = await response.json();
-  console.log(JSON.stringify(classObject));
-  document.getElementById('assignmentsdiv').innerHTML = JSON.stringify(classObject);
-}
+      const firstName = document.getElementById('firstname').value;
+      const lastName = document.getElementById('lastname').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const schoolID = document.getElementById('schoolid').value;
+      const classID = document.getElementById('classid').value;
+      const instructorID = document.getElementById('instructorid').value;
+      let body = {
+          firstName: firstName,
+          lastname: lastName,
+          email: email,
+          password: password,
+          classID: classID,
+          instructorID: instructorID,
+          schoolID: schoolID,
+      }
+      try {
+        const response = await fetch(baseurl + 'Users', {
+          method: 'POST', // or 'PUT'
+          body: JSON.stringify(body),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        const json = await response.json();
+        console.log('Success:', JSON.stringify(json));
+      } catch (error) {
+        console.error('Error:', error);
+      }
 
+  }
 
-const addClass = async (event) => {
-    const classID = parseInt(document.getElementById('classid2').value);
-    const instructorID = parseInt(document.getElementById('instructorid').value);
-    const schoolID = parseInt(document.getElementById('schoolid').value);
-    let body = {
-        classID: classID,
-        instructorID: instructorID,
-        schoolID: schoolID,
-    }
-    try {
-      const response = await fetch(baseurl + 'Classes', {
-        method: 'POST', // or 'PUT'
-        body: JSON.stringify(body),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      const json = await response.json();
-      console.log('Success:', JSON.stringify(json));
-    } catch (error) {
-      console.error('Error:', error);
-    }
-}
+  const getAllAssignments = async (event) => {
+    let classID = document.getElementById('schoolid').value;
+    const response = await fetch('https://tally2.azurewebsites.net/api/Assignments/',{mehtod: 'GET'});
+    console.log(response)
+    classObject = await response.json();
+    console.log(JSON.stringify(classObject));
+    document.getElementById('assignmentsdiv').innerHTML = JSON.stringify(classObject);
+  }
+
+  const addClass = async (event) => {
+      const classID = parseInt(document.getElementById('classid2').value);
+      const instructorID = parseInt(document.getElementById('instructorid').value);
+      const schoolID = parseInt(document.getElementById('schoolid').value);
+      let body = {
+          classID: classID,
+          instructorID: instructorID,
+          schoolID: schoolID,
+      }
+      try {
+        const response = await fetch(baseurl + 'Classes', {
+          method: 'POST', // or 'PUT'
+          body: JSON.stringify(body),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        const json = await response.json();
+        console.log('Success:', JSON.stringify(json));
+      } catch (error) {
+        console.error('Error:', error);
+      }
+  }
 
   let usersObject = [];
-const getAllUsers = async () => {
-    const response = await fetch('https://tally2.azurewebsites.net/api/users', {method: 'GET'});
-    console.log(response)
-    usersObject = await response.json();
-    console.log(JSON.stringify(usersObject));
-    document.getElementById('usersdiv').innerHTML = JSON.stringify(usersObject);
-}
+  const getAllUsers = async () => {
+      const response = await fetch('https://tally2.azurewebsites.net/api/users', {method: 'GET'});
+      console.log(response)
+      usersObject = await response.json();
+      console.log(JSON.stringify(usersObject));
+      document.getElementById('usersdiv').innerHTML = JSON.stringify(usersObject);
+  }
   return (
     <div className={classes.root}>
         {
@@ -227,7 +251,8 @@ const getAllUsers = async () => {
         </Button>
         <br></br>
         <br></br>
-        <TextField autoFocus margin="dense" id="schoolid" label="School ID" type="schoolID" fullWidth/>
+        <TextField autoFocus margin="dense" id="schoolname" label="School Name" type="schoolname" fullWidth/>
+        <TextField autoFocus margin="dense" id="schooladdress" label="School Address" type="schooladdress" fullWidth/>
         <br></br>
         <Button color="primary" variant="contained" onClick={event => addSchool()}> 
             Add School
@@ -239,7 +264,7 @@ const getAllUsers = async () => {
         <TextField autoFocus margin="dense" id="assignmentclassid" label="Class ID" type="classID" fullWidth/>
         <TextField autoFocus margin="dense" id="assignmentimagelink" label="Image Link" type="imagelink" fullWidth/>
         <br></br>
-        <Button color="primary" variant="contained" onClick={event => addSchool()}> 
+        <Button color="primary" variant="contained" onClick={event => addAssignment()}> 
             Add Assignment
         </Button>
         <br></br>
@@ -249,29 +274,41 @@ const getAllUsers = async () => {
         <TextField autoFocus margin="dense" id="assignmentid2" label="Assignment ID" type="assignmentid" fullWidth/>
         <TextField autoFocus margin="dense" id="assignmentresponseimagelink" label="Image Link" type="imagelink" fullWidth/>
         <br></br>
-        <Button color="primary" variant="contained" onClick={event => addSchool()}> 
-            Add Assignment
+        <Button color="primary" variant="contained" onClick={event => addAssignmentResponse()}> 
+            Add Assignment Response
         </Button>
         <br></br>
        {
         /* *************************************
-        // Get Specific
+        // Get Specific 
         ************************************* */
         }
-        <TextField autoFocus margin="dense" id="classid" label="ClassID" type="ClassID" fullWidth/>
+        <TextField autoFocus margin="dense" id="getclassid" label="ClassID" type="ClassID" fullWidth/>
         <Button color="primary" variant="contained" onClick={event => getClass()}> 
             Get Class 
         </Button>
         <div id="classdiv">{classObject}</div>
 
-        <TextField autoFocus margin="dense" id="assignmentid" label="AssignmentID" type="AssignmentID" fullWidth/>
+        <TextField autoFocus margin="dense" id="getassignmentid" label="AssignmentID" type="AssignmentID" fullWidth/>
         <Button color="primary" variant="contained" onClick={event => getAssignment()}> 
             Get Assignment 
         </Button>
         <div id="assignmentdiv">{assignmentObject}</div>
+
+        <TextField autoFocus margin="dense" id="getassignmentresponseid" label="AssignmentResponseID" type="AssignmentResponseID" fullWidth/>
+        <Button color="primary" variant="contained" onClick={event => getAssingmentResponse()}> 
+            Get Assignment Response 
+        </Button>
+        <div id="assignmentresponsediv">{assignmentObject}</div>
+
+        <TextField autoFocus margin="dense" id="getschoolid" label="SchoolID" type="SchoolID" fullWidth/>
+        <Button color="primary" variant="contained" onClick={event => getSchool()}> 
+            Get School 
+        </Button>
+        <div id="schooldiv">{assignmentObject}</div>
         
         {
-        /* *************************************
+        /* *************************************getassignmentresponseid
         // Get All
         ************************************* */
         }
