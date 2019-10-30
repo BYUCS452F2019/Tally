@@ -14,11 +14,6 @@ const useStyles = makeStyles(theme => ({
 const Admin = () => {
   const classes = useStyles();
   const baseurl = 'https://tally2.azurewebsites.net/api/';
-  const [open, setOpen] = React.useState(false);
-  let assignmentObject;
-  let schoolsObject;
-  let AssignmentsObject;
-  let AssignmentResponsesObject;
 
   let classesObject = [];
   const getAllClasses = async (event) => {
@@ -28,7 +23,57 @@ const Admin = () => {
     console.log(JSON.stringify(classesObject));
     document.getElementById('classesdiv').innerHTML = JSON.stringify(classesObject);
   }
+  let usersObject = [];
+  const getAllUsers = async () => {
+      const response = await fetch('https://tally2.azurewebsites.net/api/users', {method: 'GET'});
+      console.log(response)
+      usersObject = await response.json();
+      console.log(JSON.stringify(usersObject));
+      document.getElementById('usersdiv').innerHTML = JSON.stringify(usersObject);
+  }
+  let assignmentResponsesObject = [];
+  const getAllAssignmentResponses = async (event) => {
+    const response = await fetch('https://tally2.azurewebsites.net/api/AssignmentResponses/',{mehtod: 'GET'});
+    console.log(response)
+    assignmentResponsesObject = await response.json();
+    console.log(JSON.stringify(assignmentResponsesObject));
+    document.getElementById('assignmentresponsesdiv').innerHTML = JSON.stringify(assignmentResponsesObject);
+  }
+  let schoolsObject = [];
+  const getAllSchools = async (event) => {
+    const response = await fetch('https://tally2.azurewebsites.net/api/Schools/',{mehtod: 'GET'});
+    console.log(response)
+    schoolsObject = await response.json();
+    console.log(JSON.stringify(schoolsObject));
+    document.getElementById('schoolsdiv').innerHTML = JSON.stringify(schoolsObject);
+  }
+  let assignmentsObject = [];
+  const getAllAssignments = async (event) => {
+    const response = await fetch('https://tally2.azurewebsites.net/api/Assignments/',{mehtod: 'GET'});
+    console.log(response)
+    assignmentsObject = await response.json();
+    console.log(JSON.stringify(assignmentsObject));
+    document.getElementById('assignmentsdiv').innerHTML = JSON.stringify(assignmentsObject);
+  }
+  let studentsObject = [];
+  const getAllStudents = async (event) => {
+    const response = await fetch('https://tally2.azurewebsites.net/api/Students/',{mehtod: 'GET'});
+    console.log(response)
+    studentsObject = await response.json();
+    console.log(JSON.stringify(studentsObject));
+    document.getElementById('studentsdiv').innerHTML = JSON.stringify(studentsObject);
+  }
 
+  let userObject = [];
+  const getUser = async (event) => {
+    let userID = document.getElementById('getuserid').value;
+    const response = await fetch('https://tally2.azurewebsites.net/api/Users/' + userID,{mehtod: 'GET'});
+    console.log(response)
+    userObject = await response.json();
+    console.log(JSON.stringify(userObject));
+    document.getElementById('userdiv').innerHTML = JSON.stringify(userObject);
+
+  }
   let classObject = [];
   const getClass = async (event) => {
     let classID = document.getElementById('getclassid').value;
@@ -39,15 +84,44 @@ const Admin = () => {
     console.log(JSON.stringify(classObject));
     document.getElementById('classdiv').innerHTML = JSON.stringify(classObject);
   }
+  let studentObject = [];
+  const getStudent = async (event) => {
+    let studentID = document.getElementById('getschoolid').value;
+    const response = await fetch('https://tally2.azurewebsites.net/api/Students/' + studentID,{mehtod: 'GET'});
+    console.log(response)
+    studentObject = await response.json();
+    console.log(JSON.stringify(studentObject));
+    document.getElementById('schooldiv').innerHTML = JSON.stringify(studentObject);
 
+  }
+  let schoolObject = [];
   const getSchool = async (event) => {
     let schoolID = document.getElementById('getschoolid').value;
     const response = await fetch('https://tally2.azurewebsites.net/api/Schools/' + schoolID,{mehtod: 'GET'});
     console.log(response)
-    classObject = await response.json();
-    console.log(JSON.stringify(classObject));
-    document.getElementById('schooldiv').innerHTML = JSON.stringify(classObject);
+    schoolObject = await response.json();
+    console.log(JSON.stringify(schoolObject));
+    document.getElementById('schooldiv').innerHTML = JSON.stringify(schoolObject);
 
+  }
+  let assignmentObject = [];
+  const getAssignment = async (event) => {
+    let assignmentid = document.getElementById('getassignmentid').value;
+    const response = await fetch('https://tally2.azurewebsites.net/api/Assignments/' + assignmentid,{mehtod: 'GET'});
+    console.log(response)
+    assignmentObject = await response.json();
+    console.log(JSON.stringify(assignmentObject));
+    document.getElementById('assignmentdiv').innerHTML = JSON.stringify(assignmentObject);
+
+  }
+  let assignmentResponseObject = [];
+  const getAssingmentResponse = async (event) => {
+    let assignmentid = document.getElementById('getassignmentresponseid').value;
+    const response = await fetch('https://tally2.azurewebsites.net/api/AssignmentResponses/' + assignmentid,{mehtod: 'GET'});
+    console.log(response)
+    assignmentResponseObject = await response.json();
+    console.log(JSON.stringify(assignmentResponseObject));
+    document.getElementById('assignmentresponsediv').innerHTML = JSON.stringify(classObject);
   }
 
   const addSchool = async (event) => {
@@ -72,42 +146,57 @@ const Admin = () => {
       console.error('Error:', error);
     }
   }
-
-  const getAssignment = async (event) => {
-    let assignmentid = document.getElementById('getassignmentid').value;
-    const response = await fetch('https://tally2.azurewebsites.net/api/Assignments/' + assignmentid,{mehtod: 'GET'});
-    console.log(response)
-    classObject = await response.json();
-    console.log(JSON.stringify(classObject));
-    document.getElementById('assignmentdiv').innerHTML = JSON.stringify(classObject);
-
-  }
-
   const addAssignment = async (event) => {
 
+    const worksheetID = document.getElementById('worksheetname').value;
+    const classID = document.getElementById('assignmentclassid').value;
+    const imageLink = document.getElementById('assignmentimagelink').value;
+    let body = {
+        assignmentID: 0,
+        worksheetID: worksheetID,
+        classID: classID,
+        imageLink: imageLink
+    }
+    try {
+      const response = await fetch(baseurl + 'Assignments', {
+        method: 'POST', // or 'PUT'
+        body: JSON.stringify(body),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const json = await response.json();
+      console.log('Success:', JSON.stringify(json));
+    } catch (error) {
+      console.error('Error:', error);
+    }
   }
-
-  const getAssingmentResponse = async (event) => {
-    let assignmentid = document.getElementById('getassignmentresponseid').value;
-    const response = await fetch('https://tally2.azurewebsites.net/api/AssignmentResponses/' + assignmentid,{mehtod: 'GET'});
-    console.log(response)
-    classObject = await response.json();
-    console.log(JSON.stringify(classObject));
-    document.getElementById('assignmentresponsediv').innerHTML = JSON.stringify(classObject);
-  }
-
   const addAssignmentResponse = async (event) => {
 
-  }
+    const score = document.getElementById('score').value;
+    const assignmentID = document.getElementById('assignmentid2').value;
+    const imageLink = document.getElementById('assignmentresponseimagelink').value;
+    let body = {
+        assignmentResponseID: 0,
+        score: score,
+        assignmentID: assignmentID,
+        imageLink: imageLink
+    }
+    try {
+      const response = await fetch(baseurl + 'AssignmentResponses', {
+        method: 'POST', // or 'PUT'
+        body: JSON.stringify(body),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const json = await response.json();
+      console.log('Success:', JSON.stringify(json));
+    } catch (error) {
+      console.error('Error:', error);
+    }
 
-  const getAllSchools = async (event) => {
-    const response = await fetch('https://tally2.azurewebsites.net/api/Schools/',{mehtod: 'GET'});
-    console.log(response)
-    classObject = await response.json();
-    console.log(JSON.stringify(classObject));
-    document.getElementById('schoolsdiv').innerHTML = JSON.stringify(classObject);
   }
-
   const addStudent = async (event) => {
       const classId = parseInt(document.getElementById('studentclassid').value);
       const studentuserid = parseInt(document.getElementById('studentuserid').value);
@@ -130,15 +219,6 @@ const Admin = () => {
         console.error('Error:', error);
       }
   }
-
-  const getAllAssignmentResponses = async (event) => {
-    const response = await fetch('https://tally2.azurewebsites.net/api/AssignmentResponses/',{mehtod: 'GET'});
-    console.log(response)
-    classObject = await response.json();
-    console.log(JSON.stringify(classObject));
-    document.getElementById('assignmentresponsesdiv').innerHTML = JSON.stringify(classObject);
-  }
-
   const addUser = async (event) => {
 
       const firstName = document.getElementById('firstname').value;
@@ -149,6 +229,7 @@ const Admin = () => {
       const classID = document.getElementById('classid').value;
       const instructorID = document.getElementById('instructorid').value;
       let body = {
+          userID: 0,
           firstName: firstName,
           lastname: lastName,
           email: email,
@@ -172,22 +253,11 @@ const Admin = () => {
       }
 
   }
-
-  const getAllAssignments = async (event) => {
-    let classID = document.getElementById('schoolid').value;
-    const response = await fetch('https://tally2.azurewebsites.net/api/Assignments/',{mehtod: 'GET'});
-    console.log(response)
-    classObject = await response.json();
-    console.log(JSON.stringify(classObject));
-    document.getElementById('assignmentsdiv').innerHTML = JSON.stringify(classObject);
-  }
-
   const addClass = async (event) => {
-      const classID = parseInt(document.getElementById('classid2').value);
       const instructorID = parseInt(document.getElementById('instructorid').value);
       const schoolID = parseInt(document.getElementById('schoolid').value);
       let body = {
-          classID: classID,
+          classID: 0,
           instructorID: instructorID,
           schoolID: schoolID,
       }
@@ -206,14 +276,208 @@ const Admin = () => {
       }
   }
 
-  let usersObject = [];
-  const getAllUsers = async () => {
-      const response = await fetch('https://tally2.azurewebsites.net/api/users', {method: 'GET'});
-      console.log(response)
-      usersObject = await response.json();
-      console.log(JSON.stringify(usersObject));
-      document.getElementById('usersdiv').innerHTML = JSON.stringify(usersObject);
+  const updateSchool = async (event) => {
+    const schoolID = document.getElementById('schoolidU').value;
+    const name = document.getElementById('schoolname').value;
+    const address = document.getElementById('schooladdress').value;
+    let body = {
+        schoolID: 0,
+        name: name,
+        address: address,
+    }
+    try {
+      const response = await fetch(baseurl + 'Schools/' + schoolID, {
+        method: 'POST', // or 'PUT'
+        body: JSON.stringify(body),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const json = await response.json();
+      console.log('Success:', JSON.stringify(json));
+    } catch (error) {
+      console.error('Error:', error);
+    }
   }
+  const updateAssignment = async (event) => {
+    const assignmentID = document.getElementById('assignmentidU').value;
+    const worksheetID = document.getElementById('worksheetname').value;
+    const classID = document.getElementById('assignmentclassid').value;
+    const imageLink = document.getElementById('assignmentimagelink').value;
+    let body = {
+        assignmentID: 0,
+        worksheetID: worksheetID,
+        classID: classID,
+        imageLink: imageLink
+    }
+    try {
+      const response = await fetch(baseurl + 'Assignments/' + assignmentID, {
+        method: 'POST', // or 'PUT'
+        body: JSON.stringify(body),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const json = await response.json();
+      console.log('Success:', JSON.stringify(json));
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+  const updateAssignmentResponse = async (event) => {
+    const assignmentResponseID = document.getElementById('assignmentresponseidU').value;
+    const score = document.getElementById('score').value;
+    const assignmentID = document.getElementById('assignmentid2').value;
+    const imageLink = document.getElementById('assignmentresponseimagelink').value;
+    let body = {
+        assignmentResponseID: 0,
+        score: score,
+        assignmentID: assignmentID,
+        imageLink: imageLink
+    }
+    try {
+      const response = await fetch(baseurl + 'AssignmentResponses/' + assignmentResponseID, {
+        method: 'POST', // or 'PUT'
+        body: JSON.stringify(body),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const json = await response.json();
+      console.log('Success:', JSON.stringify(json));
+    } catch (error) {
+      console.error('Error:', error);
+    }
+
+  }
+  const updateStudent = async (event) => {
+    const studentID = document.getElementById('studentidU').value;
+      const classId = parseInt(document.getElementById('studentclassid').value);
+      const studentuserid = parseInt(document.getElementById('studentuserid').value);
+      let body = {
+          studentID: 0,
+          classId: classId,
+          userID: studentuserid,
+      }
+      try {
+        const response = await fetch(baseurl + 'Students/' + studentID, {
+          method: 'POST', // or 'PUT'
+          body: JSON.stringify(body),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        const json = await response.json();
+        console.log('Success:', JSON.stringify(json));
+      } catch (error) {
+        console.error('Error:', error);
+      }
+  }
+  const updateUser = async (event) => {
+      const userID = document.getElementById('useridU').value;
+      const firstName = document.getElementById('firstname').value;
+      const lastName = document.getElementById('lastname').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const schoolID = document.getElementById('schoolid').value;
+      const classID = document.getElementById('classid').value;
+      const instructorID = document.getElementById('instructorid').value;
+      let body = {
+          userID: 0,
+          firstName: firstName,
+          lastname: lastName,
+          email: email,
+          password: password,
+          classID: classID,
+          instructorID: instructorID,
+          schoolID: schoolID,
+      }
+      try {
+        const response = await fetch(baseurl + 'Users/' + userID, {
+          method: 'POST', // or 'PUT'
+          body: JSON.stringify(body),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        const json = await response.json();
+        console.log('Success:', JSON.stringify(json));
+      } catch (error) {
+        console.error('Error:', error);
+      }
+
+  }
+  const updateClass = async (event) => {
+      const classID = document.getElementById('classid').value;
+      const instructorID = parseInt(document.getElementById('instructorid').value);
+      const schoolID = parseInt(document.getElementById('schoolid').value);
+      let body = {
+          classID: 0,
+          instructorID: instructorID,
+          schoolID: schoolID,
+      }
+      try {
+        const response = await fetch(baseurl + 'Classes/' + classID, {
+          method: 'POST', // or 'PUT'
+          body: JSON.stringify(body),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        const json = await response.json();
+        console.log('Success:', JSON.stringify(json));
+      } catch (error) {
+        console.error('Error:', error);
+      }
+  }
+
+  const deleteUser = async (event) => {
+    let userID = document.getElementById('getuserid-D').value;
+    const response = await fetch('https://tally2.azurewebsites.net/api/Users/' + userID,{mehtod: 'DELETE'});
+    console.log(response)
+    console.log('deleting user')
+    let responseJSON = await response.json();
+    console.log(JSON.stringify(responseJSON));
+  }
+  const deleteClass = async (event) => {
+    let classID = document.getElementById('getclassid-D').value;
+    console.log(classID);
+    const response = await fetch('https://tally2.azurewebsites.net/api/Classes/' + classID,{mehtod: 'DELETE'});
+    console.log(response)
+    let responseJSON = await response.json();
+    console.log(JSON.stringify(responseJSON));
+  }
+  const deleteStudent = async (event) => {
+    let studentID = document.getElementById('getstudentid-D').value;
+    const response = await fetch('https://tally2.azurewebsites.net/api/Students/' + studentID,{mehtod: 'DELETE'});
+    console.log(response)
+    let responseJSON = await response.json();
+    console.log(JSON.stringify(responseJSON));
+  }
+  const deleteSchool = async (event) => {
+    let schoolID = document.getElementById('getschoolid-D').value;
+    const response = await fetch('https://tally2.azurewebsites.net/api/Schools/' + schoolID,{mehtod: 'DELETE'});
+    console.log(response)
+    let responseJSON = await response.json();
+    console.log(JSON.stringify(responseJSON));
+
+  }
+  const deleteAssignment = async (event) => {
+    let assignmentid = document.getElementById('getassignmentid-D').value;
+    const response = await fetch('https://tally2.azurewebsites.net/api/Assignments/' + assignmentid,{mehtod: 'DELETE'});
+    console.log(response)
+    let responseJSON = await response.json();
+    console.log(JSON.stringify(responseJSON));
+
+  }
+  const deleteAssingmentResponse = async (event) => {
+    let assignmentid = document.getElementById('getassignmentresponseid-D').value;
+    const response = await fetch('https://tally2.azurewebsites.net/api/AssignmentResponses/' + assignmentid,{mehtod: 'DELETE'});
+    console.log(response)
+    let responseJSON = await response.json();
+    console.log(JSON.stringify(responseJSON));
+  }
+
   return (
     <div className={classes.root}>
         {
@@ -223,7 +487,6 @@ const Admin = () => {
         }       
         <br></br>
         <TextField autoFocus margin="dense" id="schoolid" label="SchoolID" type="schoolID" fullWidth/>
-        <TextField autoFocus margin="dense" id="classid2" label="ClassID" type="classID" fullWidth/>
         <TextField autoFocus margin="dense" id="instructorid" label="InstructorID" type="instructorID" fullWidth/>
         <br></br>
         <Button color="primary" variant="contained" onClick={event => addClass()}> 
@@ -259,7 +522,6 @@ const Admin = () => {
         </Button>
         <br></br>
         <br></br>
-        <TextField autoFocus margin="dense" id="assignmentid" label="Assignment ID" type="AssignmentID" fullWidth/>
         <TextField autoFocus margin="dense" id="worksheetname" label="Worksheet Name" type="worksheetname" fullWidth/>
         <TextField autoFocus margin="dense" id="assignmentclassid" label="Class ID" type="classID" fullWidth/>
         <TextField autoFocus margin="dense" id="assignmentimagelink" label="Image Link" type="imagelink" fullWidth/>
@@ -269,7 +531,6 @@ const Admin = () => {
         </Button>
         <br></br>
         <br></br>
-        <TextField autoFocus margin="dense" id="assignmentresponseid" label="Assignment Response ID" type="AssignmentID" fullWidth/>
         <TextField autoFocus margin="dense" id="score" label="score" type="score" fullWidth/>
         <TextField autoFocus margin="dense" id="assignmentid2" label="Assignment ID" type="assignmentid" fullWidth/>
         <TextField autoFocus margin="dense" id="assignmentresponseimagelink" label="Image Link" type="imagelink" fullWidth/>
@@ -301,6 +562,18 @@ const Admin = () => {
         </Button>
         <div id="assignmentresponsediv">{assignmentObject}</div>
 
+        <TextField autoFocus margin="dense" id="getstudentid" label="Student ID" type="studentID" fullWidth/>
+        <Button color="primary" variant="contained" onClick={event => getUser()}> 
+            Get Student 
+        </Button>
+        <div id="studentdiv">{studentObject}</div>
+
+        <TextField autoFocus margin="dense" id="getuserid" label="User ID" type="userID" fullWidth/>
+        <Button color="primary" variant="contained" onClick={event => getUser()}> 
+            Get User 
+        </Button>
+        <div id="userdiv">{userObject}</div>
+
         <TextField autoFocus margin="dense" id="getschoolid" label="SchoolID" type="SchoolID" fullWidth/>
         <Button color="primary" variant="contained" onClick={event => getSchool()}> 
             Get School 
@@ -331,13 +604,119 @@ const Admin = () => {
         <Button color="primary" variant="contained" onClick={(event)=>{getAllAssignments();}}> 
             Get All Assignments
         </Button>
-        <div id="assignmentsdiv">{AssignmentsObject}</div>
+        <div id="assignmentsdiv">{assignmentsObject}</div>
         <br></br>
         <Button color="primary" variant="contained" onClick={(event)=>{getAllAssignmentResponses();}}> 
             Get All Assignment Responses
         </Button>
-        <div id="assignmentresponsesdiv">{AssignmentResponsesObject}</div>
+        <div id="assignmentresponsesdiv">{assignmentResponsesObject}</div>
+        <br></br>
+        <Button color="primary" variant="contained" onClick={event => getAllStudents()}> 
+            Get All Students
+        </Button>
+        <div id="studentsdiv">{studentsObject}</div>
+        <br></br>
 
+        {
+        /* *************************************
+        // Update
+        ************************************* */
+        }       
+        <br></br>
+        <TextField autoFocus margin="dense" id="classidU" label="Class ID" type="response" fullWidth/>
+        <TextField autoFocus margin="dense" id="schoolidU" label="SchoolID" type="schoolID" fullWidth/>
+        <TextField autoFocus margin="dense" id="instructoridU" label="InstructorID" type="instructorID" fullWidth/>
+        <br></br>
+        <Button color="primary" variant="contained" onClick={event => updateClass()}> 
+            update Class
+        </Button>
+        <br></br>
+        <br></br>
+        <TextField autoFocus margin="dense" id="useridU" label="User ID" type="response" fullWidth/>
+        <TextField autoFocus margin="dense" id="firstnameU" label="First name" type="First Name" fullWidth />
+        <TextField autoFocus margin="dense" id="lastnameU" label="Last Name" type="Last Name" fullWidth/>
+        <TextField autoFocus margin="dense" id="emailU" label="Email" type="email" fullWidth/>
+        <TextField autoFocus margin="dense" id="phonenumberU" label="Phone Number" type="phone" fullWidth/>
+        <TextField autoFocus margin="dense" id="passwordU" label="Password" type="password" fullWidth />
+        <TextField autoFocus margin="dense" id="schoolidU" label="SchoolID" type="schoolID" fullWidth/>
+        <TextField autoFocus margin="dense" id="classidU" label="ClassID" type="classID" fullWidth/>
+        <br></br>
+        <Button color="primary" variant="contained" onClick={event => updateUser()}> 
+            Update User
+        </Button>
+        <br></br>
+        <TextField autoFocus margin="dense" id="studentidU" label="Student ID" type="response" fullWidth/>
+        <TextField autoFocus margin="dense" id="studentclassidU" label="Class ID" type="schoolID" fullWidth/>
+        <TextField autoFocus margin="dense" id="studentuseridU" label="User ID" type="userID" fullWidth/>
+        <br></br>
+        <Button color="primary" variant="contained" onClick={event => updateStudent()}> 
+            Update Student
+        </Button>
+        <br></br>
+        <br></br>
+        <TextField autoFocus margin="dense" id="schoolidU" label="School ID" type="response" fullWidth/>
+        <TextField autoFocus margin="dense" id="schoolnameU" label="School Name" type="schoolname" fullWidth/>
+        <TextField autoFocus margin="dense" id="schooladdressU" label="School Address" type="schooladdress" fullWidth/>
+        <br></br>
+        <Button color="primary" variant="contained" onClick={event => updateSchool()}> 
+            Update School
+        </Button>
+        <br></br>
+        <br></br>
+        <TextField autoFocus margin="dense" id="assignmentidU" label="Assignment ID" type="response" fullWidth/>
+        <TextField autoFocus margin="dense" id="worksheetnameU" label="Worksheet Name" type="worksheetname" fullWidth/>
+        <TextField autoFocus margin="dense" id="assignmentclassidU" label="Class ID" type="classID" fullWidth/>
+        <TextField autoFocus margin="dense" id="assignmentimagelinkU" label="Image Link" type="imagelink" fullWidth/>
+        <br></br>
+        <Button color="primary" variant="contained" onClick={event => updateAssignment()}> 
+            Update Assignment
+        </Button>
+        <br></br>
+        <br></br>
+        <TextField autoFocus margin="dense" id="assignmentresponseidU" label="Assignment Response ID" type="response" fullWidth/>
+        <TextField autoFocus margin="dense" id="scoreU" label="score" type="score" fullWidth/>
+        <TextField autoFocus margin="dense" id="assignmentid2U" label="Assignment ID" type="assignmentid" fullWidth/>
+        <TextField autoFocus margin="dense" id="assignmentresponseimagelinkU" label="Image Link" type="imagelink" fullWidth/>
+        <br></br>
+        <Button color="primary" variant="contained" onClick={event => updateAssignmentResponse()}> 
+            Update Assignment Response
+        </Button>
+        <br></br>
+
+        {
+        /* *************************************
+        // Delete Specific 
+        ************************************* */
+        }
+        <TextField autoFocus margin="dense" id="getclassid-D" label="ClassID" type="ClassID" fullWidth/>
+        <Button color="primary" variant="contained" onClick={event => deleteClass()}> 
+        Delete Class 
+        </Button>
+
+        <TextField autoFocus margin="dense" id="getassignmentid-D" label="AssignmentID" type="AssignmentID" fullWidth/>
+        <Button color="primary" variant="contained" onClick={event => deleteAssignment()}> 
+        Delete Assignment 
+        </Button>
+
+        <TextField autoFocus margin="dense" id="getassignmentresponseid-D" label="AssignmentResponseID" type="AssignmentResponseID" fullWidth/>
+        <Button color="primary" variant="contained" onClick={event => deleteAssingmentResponse()}> 
+        Delete Assignment Response 
+        </Button>
+
+        <TextField autoFocus margin="dense" id="getuserid-D" label="User ID" type="userID" fullWidth/>
+        <Button color="primary" variant="contained" onClick={event => deleteUser()}> 
+        Delete User 
+        </Button>
+
+        <TextField autoFocus margin="dense" id="getstudentid-D" label="Student ID" type="userID" fullWidth/>
+        <Button color="primary" variant="contained" onClick={event => deleteStudent()}> 
+            Delete Student 
+        </Button>
+
+        <TextField autoFocus margin="dense" id="getschoolid-D" label="SchoolID" type="SchoolID" fullWidth/>
+        <Button color="primary" variant="contained" onClick={event => deleteSchool()}> 
+        Delete School 
+        </Button>
       
     </div>
   );
