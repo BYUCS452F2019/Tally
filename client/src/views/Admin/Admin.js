@@ -84,16 +84,15 @@ const getAllSchools = async (event) => {
 }
 
 const addStudent = async (event) => {
-    const studentID = parseInt(document.getElementById('studentclassid').value);
-    const studentschoolID = parseInt(document.getElementById('studentschoolid').value);
-    const schoolID = parseInt(document.getElementById('studentid').value);
+    const classId = parseInt(document.getElementById('studentclassid').value);
+    const studentuserid = parseInt(document.getElementById('studentuserid').value);
     let body = {
-        studentID: studentID,
-        instructorID: studentschoolID,
-        schoolID: schoolID,
+        studentID: 0,
+        classId: classId,
+        userID: studentuserid,
     }
     try {
-      const response = await fetch(baseurl + 'Classes', {
+      const response = await fetch(baseurl + 'Students', {
         method: 'POST', // or 'PUT'
         body: JSON.stringify(body),
         headers: {
@@ -221,8 +220,7 @@ const getAllUsers = async () => {
         </Button>
         <br></br>
         <TextField autoFocus margin="dense" id="studentclassid" label="Class ID" type="schoolID" fullWidth/>
-        <TextField autoFocus margin="dense" id="studentschoolid" label="School ID" type="schoolID" fullWidth/>
-        <TextField autoFocus margin="dense" id="studentid" label="Student ID" type="studentID" fullWidth/>
+        <TextField autoFocus margin="dense" id="studentuserid" label="User ID" type="userID" fullWidth/>
         <br></br>
         <Button color="primary" variant="contained" onClick={event => addStudent()}> 
             Add Student
