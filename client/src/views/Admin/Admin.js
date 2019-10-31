@@ -287,7 +287,7 @@ const Admin = () => {
     }
     try {
       const response = await fetch(baseurl + 'Schools/' + schoolID, {
-        method: 'POST', // or 'PUT'
+        method: 'PUT', // or 'PUT'
         body: JSON.stringify(body),
         headers: {
           'Content-Type': 'application/json'
@@ -312,7 +312,7 @@ const Admin = () => {
     }
     try {
       const response = await fetch(baseurl + 'Assignments/' + assignmentID, {
-        method: 'POST', // or 'PUT'
+        method: 'PUT', // or 'PUT'
         body: JSON.stringify(body),
         headers: {
           'Content-Type': 'application/json'
@@ -337,7 +337,7 @@ const Admin = () => {
     }
     try {
       const response = await fetch(baseurl + 'AssignmentResponses/' + assignmentResponseID, {
-        method: 'POST', // or 'PUT'
+        method: 'PUT', // or 'PUT'
         body: JSON.stringify(body),
         headers: {
           'Content-Type': 'application/json'
@@ -361,7 +361,7 @@ const Admin = () => {
       }
       try {
         const response = await fetch(baseurl + 'Students/' + studentID, {
-          method: 'POST', // or 'PUT'
+          method: 'PUT', // or 'PUT'
           body: JSON.stringify(body),
           headers: {
             'Content-Type': 'application/json'
@@ -394,7 +394,7 @@ const Admin = () => {
       }
       try {
         const response = await fetch(baseurl + 'Users/' + userID, {
-          method: 'POST', // or 'PUT'
+          method: 'PUT', // or 'PUT'
           body: JSON.stringify(body),
           headers: {
             'Content-Type': 'application/json'
@@ -418,7 +418,7 @@ const Admin = () => {
       }
       try {
         const response = await fetch(baseurl + 'Classes/' + classID, {
-          method: 'POST', // or 'PUT'
+          method: 'PUT', // or 'PUT'
           body: JSON.stringify(body),
           headers: {
             'Content-Type': 'application/json'
