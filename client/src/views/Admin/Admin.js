@@ -441,7 +441,7 @@ const Admin = () => {
 
   const deleteUser = async (event) => {
     let userID = document.getElementById('getuserid-D').value;
-    const response = await fetch('https://tally2.azurewebsites.net/api/Users/' + userID,{mehtod: 'DELETE'});
+    const response = await fetch('https://tally2.azurewebsites.net/api/Users/' + userID,{method: 'DELETE'});
     console.log(response)
     console.log('deleting user')
     let responseJSON = await response.json();
@@ -450,21 +450,21 @@ const Admin = () => {
   const deleteClass = async (event) => {
     let classID = document.getElementById('getclassid-D').value;
     console.log(classID);
-    const response = await fetch('https://tally2.azurewebsites.net/api/Classes/' + classID,{mehtod: 'DELETE'});
+    const response = await fetch('https://tally2.azurewebsites.net/api/Classes/' + classID,{method: 'DELETE'});
     console.log(response)
     let responseJSON = await response.json();
     console.log(JSON.stringify(responseJSON));
   }
   const deleteStudent = async (event) => {
     let studentID = document.getElementById('getstudentid-D').value;
-    const response = await fetch('https://tally2.azurewebsites.net/api/Students/' + studentID,{mehtod: 'DELETE'});
+    const response = await fetch('https://tally2.azurewebsites.net/api/Students/' + studentID,{method: 'DELETE'});
     console.log(response)
     let responseJSON = await response.json();
     console.log(JSON.stringify(responseJSON));
   }
   const deleteSchool = async (event) => {
     let schoolID = document.getElementById('getschoolid-D').value;
-    const response = await fetch('https://tally2.azurewebsites.net/api/Schools/' + schoolID,{mehtod: 'DELETE'});
+    const response = await fetch('https://tally2.azurewebsites.net/api/Schools/' + schoolID,{method: 'DELETE'});
     console.log(response)
     let responseJSON = await response.json();
     console.log(JSON.stringify(responseJSON));
@@ -472,7 +472,7 @@ const Admin = () => {
   }
   const deleteAssignment = async (event) => {
     let assignmentid = document.getElementById('getassignmentid-D').value;
-    const response = await fetch('https://tally2.azurewebsites.net/api/Assignments/' + assignmentid,{mehtod: 'DELETE'});
+    const response = await fetch('https://tally2.azurewebsites.net/api/Assignments/' + assignmentid,{method: 'DELETE'});
     console.log(response)
     let responseJSON = await response.json();
     console.log(JSON.stringify(responseJSON));
@@ -480,7 +480,7 @@ const Admin = () => {
   }
   const deleteAssingmentResponse = async (event) => {
     let assignmentid = document.getElementById('getassignmentresponseid-D').value;
-    const response = await fetch('https://tally2.azurewebsites.net/api/AssignmentResponses/' + assignmentid,{mehtod: 'DELETE'});
+    const response = await fetch('https://tally2.azurewebsites.net/api/AssignmentResponses/' + assignmentid,{method: 'DELETE'});
     console.log(response)
     let responseJSON = await response.json();
     console.log(JSON.stringify(responseJSON));
