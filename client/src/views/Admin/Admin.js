@@ -224,6 +224,7 @@ const Admin = () => {
       const firstName = document.getElementById('firstname').value;
       const lastName = document.getElementById('lastname').value;
       const email = document.getElementById('email').value;
+      const phoneNumber = document.getElementById('phonenumber').value;
       const password = document.getElementById('password').value;
       const schoolID = document.getElementById('schoolid').value;
       const classID = document.getElementById('classid').value;
@@ -233,6 +234,7 @@ const Admin = () => {
           firstName: firstName,
           lastname: lastName,
           email: email,
+          phoneNumber: phoneNumber,
           password: password,
           classID: classID,
           instructorID: instructorID,
@@ -384,6 +386,7 @@ const Admin = () => {
       const firstName = document.getElementById('firstnameU').value;
       const lastName = document.getElementById('lastnameU').value;
       const email = document.getElementById('emailU').value;
+      const phoneNumber = document.getElementById('phonenumberU').value;
       const password = document.getElementById('passwordU').value;
       const schoolID = parseInt(document.getElementById('schoolidU3').value);
       const classID = parseInt(document.getElementById('classidU').value);
@@ -394,6 +397,7 @@ const Admin = () => {
           firstName: firstName,
           lastname: lastName,
           email: email,
+          phoneNumber: phoneNumber,
           password: password,
           classID: classID,
           instructorID: instructorID,
