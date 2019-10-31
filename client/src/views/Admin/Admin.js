@@ -278,10 +278,11 @@ const Admin = () => {
 
   const updateSchool = async (event) => {
     const schoolID = document.getElementById('schoolidU').value;
-    const name = document.getElementById('schoolname').value;
-    const address = document.getElementById('schooladdress').value;
+    const name = document.getElementById('schoolnameU').value;
+    const address = document.getElementById('schooladdressU').value;
+    const id = parseInt(schoolID);
     let body = {
-        schoolID: 0,
+        schoolID: id,
         name: name,
         address: address,
     }
@@ -301,11 +302,12 @@ const Admin = () => {
   }
   const updateAssignment = async (event) => {
     const assignmentID = document.getElementById('assignmentidU').value;
-    const worksheetID = document.getElementById('worksheetname').value;
-    const classID = document.getElementById('assignmentclassid').value;
-    const imageLink = document.getElementById('assignmentimagelink').value;
+    const worksheetID = parseInt(document.getElementById('worksheetnameU').value);
+    const classID = parseInt(document.getElementById('assignmentclassidU').value);
+    const imageLink = document.getElementById('assignmentimagelinkU').value;
+    const id = parseInt(assignmentID);
     let body = {
-        assignmentID: 0,
+        assignmentID: id,
         worksheetID: worksheetID,
         classID: classID,
         imageLink: imageLink
@@ -326,11 +328,12 @@ const Admin = () => {
   }
   const updateAssignmentResponse = async (event) => {
     const assignmentResponseID = document.getElementById('assignmentresponseidU').value;
-    const score = document.getElementById('score').value;
-    const assignmentID = document.getElementById('assignmentid2').value;
-    const imageLink = document.getElementById('assignmentresponseimagelink').value;
+    const score = parseInt(document.getElementById('scoreU').value);
+    const assignmentID = parseInt(document.getElementById('assignmentid2U').value);
+    const imageLink = document.getElementById('assignmentresponseimagelinkU').value;
+    const id = parseInt(assignmentResponseID);
     let body = {
-        assignmentResponseID: 0,
+        assignmentResponseID: id,
         score: score,
         assignmentID: assignmentID,
         imageLink: imageLink
@@ -352,10 +355,11 @@ const Admin = () => {
   }
   const updateStudent = async (event) => {
     const studentID = document.getElementById('studentidU').value;
-      const classId = parseInt(document.getElementById('studentclassid').value);
-      const studentuserid = parseInt(document.getElementById('studentuserid').value);
+      const classId = parseInt(document.getElementById('studentclassidU').value);
+      const studentuserid = parseInt(document.getElementById('studentuseridU').value);
+      const id = parseInt(studentID);
       let body = {
-          studentID: 0,
+          studentID: id,
           classId: classId,
           userID: studentuserid,
       }
@@ -375,15 +379,16 @@ const Admin = () => {
   }
   const updateUser = async (event) => {
       const userID = document.getElementById('useridU').value;
-      const firstName = document.getElementById('firstname').value;
-      const lastName = document.getElementById('lastname').value;
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      const schoolID = document.getElementById('schoolid').value;
-      const classID = document.getElementById('classid').value;
-      const instructorID = document.getElementById('instructorid').value;
+      const firstName = document.getElementById('firstnameU').value;
+      const lastName = document.getElementById('lastnameU').value;
+      const email = document.getElementById('emailU').value;
+      const password = document.getElementById('passwordU').value;
+      const schoolID = parseInt(document.getElementById('schoolidU').value);
+      const classID = parseInt(document.getElementById('classidU').value);
+      const instructorID = parseInt(document.getElementById('instructoridU').value);
+      const id = parseInt(userID);
       let body = {
-          userID: 0,
+          userID: id,
           firstName: firstName,
           lastname: lastName,
           email: email,
@@ -408,14 +413,17 @@ const Admin = () => {
 
   }
   const updateClass = async (event) => {
-      const classID = document.getElementById('classid').value;
-      const instructorID = parseInt(document.getElementById('instructorid').value);
-      const schoolID = parseInt(document.getElementById('schoolid').value);
+      const classID = document.getElementById('classidU').value;
+      const id = parseInt(classID);
+      const instructorID = parseInt(document.getElementById('instructoridU').value);
+      const schoolID = parseInt(document.getElementById('schoolidU').value);
+      console.log(classID)
       let body = {
-          classID: 0,
+          classID: id,
           instructorID: instructorID,
           schoolID: schoolID,
       }
+      console.log(body)
       try {
         const response = await fetch(baseurl + 'Classes/' + classID, {
           method: 'PUT', // or 'PUT'
