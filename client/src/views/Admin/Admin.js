@@ -286,6 +286,8 @@ const Admin = () => {
         name: name,
         address: address,
     }
+    console.log(body)
+    console.log(schoolID)
     try {
       const response = await fetch(baseurl + 'Schools/' + schoolID, {
         method: 'PUT', // or 'PUT'
@@ -383,7 +385,7 @@ const Admin = () => {
       const lastName = document.getElementById('lastnameU').value;
       const email = document.getElementById('emailU').value;
       const password = document.getElementById('passwordU').value;
-      const schoolID = parseInt(document.getElementById('schoolidU').value);
+      const schoolID = parseInt(document.getElementById('schoolidU3').value);
       const classID = parseInt(document.getElementById('classidU').value);
       const instructorID = parseInt(document.getElementById('instructoridU').value);
       const id = parseInt(userID);
@@ -416,7 +418,7 @@ const Admin = () => {
       const classID = document.getElementById('classidU').value;
       const id = parseInt(classID);
       const instructorID = parseInt(document.getElementById('instructoridU').value);
-      const schoolID = parseInt(document.getElementById('schoolidU').value);
+      const schoolID = parseInt(document.getElementById('schoolidU2').value);
       console.log(classID)
       let body = {
           classID: id,
@@ -632,7 +634,7 @@ const Admin = () => {
         }       
         <br></br>
         <TextField autoFocus margin="dense" id="classidU" label="Class ID" type="response" fullWidth/>
-        <TextField autoFocus margin="dense" id="schoolidU" label="SchoolID" type="schoolID" fullWidth/>
+        <TextField autoFocus margin="dense" id="schoolidU2" label="SchoolID" type="schoolID" fullWidth/>
         <TextField autoFocus margin="dense" id="instructoridU" label="InstructorID" type="instructorID" fullWidth/>
         <br></br>
         <Button color="primary" variant="contained" onClick={event => updateClass()}> 
@@ -646,7 +648,7 @@ const Admin = () => {
         <TextField autoFocus margin="dense" id="emailU" label="Email" type="email" fullWidth/>
         <TextField autoFocus margin="dense" id="phonenumberU" label="Phone Number" type="phone" fullWidth/>
         <TextField autoFocus margin="dense" id="passwordU" label="Password" type="password" fullWidth />
-        <TextField autoFocus margin="dense" id="schoolidU" label="SchoolID" type="schoolID" fullWidth/>
+        <TextField autoFocus margin="dense" id="schoolidU3" label="SchoolID" type="schoolID" fullWidth/>
         <TextField autoFocus margin="dense" id="classidU" label="ClassID" type="classID" fullWidth/>
         <br></br>
         <Button color="primary" variant="contained" onClick={event => updateUser()}> 
