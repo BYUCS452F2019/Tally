@@ -91,7 +91,7 @@ const Admin = () => {
     console.log(response)
     studentObject = await response.json();
     console.log(JSON.stringify(studentObject));
-    document.getElementById('schooldiv').innerHTML = JSON.stringify(studentObject);
+    document.getElementById('studentdiv').innerHTML = JSON.stringify(studentObject);
 
   }
   let schoolObject = [];
@@ -116,12 +116,12 @@ const Admin = () => {
   }
   let assignmentResponseObject = [];
   const getAssingmentResponse = async (event) => {
-    let assignmentid = document.getElementById('getassignmentresponseid').value;
-    const response = await fetch('https://tally2.azurewebsites.net/api/AssignmentResponses/' + assignmentid,{mehtod: 'GET'});
+    let assignmentresponseid = document.getElementById('getassignmentresponseid').value;
+    const response = await fetch('https://tally2.azurewebsites.net/api/AssignmentResponses/' + assignmentresponseid,{mehtod: 'GET'});
     console.log(response)
     assignmentResponseObject = await response.json();
     console.log(JSON.stringify(assignmentResponseObject));
-    document.getElementById('assignmentresponsediv').innerHTML = JSON.stringify(classObject);
+    document.getElementById('assignmentresponsediv').innerHTML = JSON.stringify(assignmentResponseObject);
   }
 
   const addSchool = async (event) => {
@@ -570,10 +570,10 @@ const Admin = () => {
         <Button color="primary" variant="contained" onClick={event => getAssingmentResponse()}> 
             Get Assignment Response 
         </Button>
-        <div id="assignmentresponsediv">{assignmentObject}</div>
+        <div id="assignmentresponsediv">{assignmentResponseObject}</div>
 
         <TextField autoFocus margin="dense" id="getstudentid" label="Student ID" type="studentID" fullWidth/>
-        <Button color="primary" variant="contained" onClick={event => getUser()}> 
+        <Button color="primary" variant="contained" onClick={event => getStudent()}> 
             Get Student 
         </Button>
         <div id="studentdiv">{studentObject}</div>
