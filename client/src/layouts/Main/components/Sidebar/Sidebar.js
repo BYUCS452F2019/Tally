@@ -48,6 +48,11 @@ const Sidebar = props => {
       icon: <PeopleIconOutlined />
     },
     {
+      title: 'AdminNoSQL',
+      href: '/admin-nosql',
+      icon: <PeopleIconOutlined />
+    },
+    {
       title: 'Dashboard',
       href: '/dashboard',
       icon: <DashboardIcon />
