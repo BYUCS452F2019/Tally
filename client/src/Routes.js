@@ -13,7 +13,8 @@ import {
   SignUp as SignUpView,
   SignIn as SignInView,
   NotFound as NotFoundView,
-  Admin as AdminView
+  Admin as AdminView,
+  AdminNoSQL as AdminNoSQLView
 } from './views';
 
 const Routes = () => {
@@ -41,6 +42,12 @@ const Routes = () => {
         exact
         layout={MainLayout}
         path="/admin"
+      />
+      <RouteWithLayout
+        component={AdminNoSQLView}
+        exact
+        layout={MainLayout}
+        path="/admin-nosql"
       />
       {/* <RouteWithLayout
         component={ProductListView}
